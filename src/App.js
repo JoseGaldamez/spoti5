@@ -1,21 +1,18 @@
-import logo from "./logo.svg";
-import "./App.css";
+import auth from "./utils/firebase";
+
+import "./App.scss";
 
 function App() {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      console.log("user logged in");
+    } else {
+      console.log("user logged out");
+    }
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>App corriendo.</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>App en electron</h1>
     </div>
   );
 }
