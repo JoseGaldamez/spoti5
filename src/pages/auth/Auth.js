@@ -18,7 +18,7 @@ function Auth() {
         return <LoginForm />;
 
       case "register":
-        return <RegisterForm />;
+        return <RegisterForm setSelectedForm={setselectedForm} />;
 
       default:
         return <AuthOptions setSelectedForm={setselectedForm} />;
