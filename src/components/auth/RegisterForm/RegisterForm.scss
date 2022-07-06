@@ -56,7 +56,8 @@
 
     .error-text {
       color: $font-light-color;
-      padding-left: 15px;
+      display: inline-block;
+      padding-bottom: 15px;
     }
   }
 
@@ -64,13 +65,13 @@
     margin-top: 50px;
     color: $font-light-color;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     text-transform: uppercase;
     font-weight: bold;
 
     p {
       &:first-of-type {
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         &:hover {
           cursor: pointer;
         }
@@ -86,7 +87,7 @@
             cursor: pointer;
           }
         }
-        margin-top: 40px;
+        margin-top: 20px;
       }
     }
   }

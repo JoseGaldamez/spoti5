@@ -1,4 +1,4 @@
-import auth from "./utils/firebase";
+import { auth } from "./utils/firebase";
 import { useState } from "react";
 
 import "./App.scss";
@@ -10,9 +10,9 @@ function App() {
 
   auth.onAuthStateChanged((currentUser) => {
     if (!currentUser) {
-      setUser(currentUser);
-    } else {
       setUser(null);
+    } else {
+      setUser(currentUser);
     }
 
     setIsLoading(false);
