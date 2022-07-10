@@ -1,6 +1,13 @@
 import React, { useState } from "react";
+
+import { toast } from "react-toastify";
+
 import { Button, Icon, Form, Input } from "semantic-ui-react";
-import { auth, createUserWithEmailAndPassword } from "../../../utils/firebase";
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "../../../utils/firebase";
 import { validateEmail } from "../../../utils/validations";
 
 import "./RegisterForm.scss";
@@ -15,13 +22,26 @@ function RegisterForm({ setSelectedForm }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
   const onSubmit = () => {
     setFormError({});
+    if (validateDataForm()) {
+      setLoading(true);
+      createUserWithEmailAndPassword(auth, formData.email, formData.password)
+        .then(async (useCredentials) => {
+          toast.success("Registro correcto");
+          await changeUserName(useCredentials.user);
+          setSelectedForm(null);
+        })
+        .catch((error) => {
+          toast.error("Algo ha salido mal.");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  };
 
+  const validateDataForm = () => {
     let errors = {};
     let formOK = true;
 
@@ -41,23 +61,15 @@ function RegisterForm({ setSelectedForm }) {
     }
 
     setFormError(errors);
+    return formOK;
+  };
 
-    if (formOK) {
-      setLoading(true);
-      createUserWithEmailAndPassword(auth, formData.email, formData.password)
-        .then((useCredentials) => {
-          console.log("Registro completado.");
-          console.log(useCredentials.user);
-          setSelectedForm(null);
-        })
-        .catch((error) => {
-          console.log("Algo salio mal");
-          console.log(error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
+  const changeUserName = async (currentUser) => {
+    await updateProfile(currentUser, {
+      displayName: formData.username,
+    }).catch((error) => {
+      toast.error("No se pudo actualizar el nombre de usuario");
+    });
   };
 
   return (
@@ -87,10 +99,18 @@ function RegisterForm({ setSelectedForm }) {
                 <Icon
                   name="eye slash outline"
                   link
-                  onClick={handleShowPassword}
+                  onClick={() => {
+                    setShowPassword(false);
+                  }}
                 />
               ) : (
-                <Icon name="eye" link onClick={handleShowPassword} />
+                <Icon
+                  name="eye"
+                  link
+                  onClick={() => {
+                    setShowPassword(true);
+                  }}
+                />
               )
             }
             //onChange={}
