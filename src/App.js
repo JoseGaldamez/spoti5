@@ -10,11 +10,11 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   auth.onAuthStateChanged((currentUser) => {
-    if (!currentUser) {
-      setUser(null);
+    if (!currentUser?.emailVerified) {
+      auth.signOut();
+      setUser(currentUser);
     } else {
       setUser(currentUser);
-      console.log(currentUser);
     }
 
     setIsLoading(false);

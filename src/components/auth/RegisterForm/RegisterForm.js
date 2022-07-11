@@ -4,7 +4,7 @@ import { Button, Form } from "semantic-ui-react";
 import { onSubmitUtils } from "./utilsRegisterForm";
 import "./RegisterForm.scss";
 import InputRegister from "../../commons/InputRegister";
-import FooterRegister from "../../commons/FooterRegister";
+import FooterRegister from "../../commons/FooterAuth";
 
 function RegisterForm({ setSelectedForm }) {
   const [formData, setFormData] = useState(defaultValueForm);

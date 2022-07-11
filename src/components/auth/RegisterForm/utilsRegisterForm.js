@@ -3,6 +3,7 @@ import {
   auth,
   createUserWithEmailAndPassword,
   updateProfile,
+  sendEmailVerification,
 } from "../../../utils/firebase";
 
 import { validateEmail } from "../../../utils/validations";
@@ -21,6 +22,7 @@ export const onSubmitUtils = (
       .then(async (useCredentials) => {
         toast.success("Registro correcto");
         await changeUserName(useCredentials.user, formData);
+        await sendVerificationEmail(useCredentials.user);
         setSelectedForm(null);
       })
       .catch((error) => {
@@ -40,7 +42,18 @@ const changeUserName = async (currentUser, formData) => {
   });
 };
 
-const validateDataForm = (formData, setFormError) => {
+const sendVerificationEmail = async (currentUser) => {
+  await sendEmailVerification(currentUser)
+    .then(() => {
+      toast.success("Se ha enviado un correo de verificación");
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error("No se pudo enviar el correo de verificación");
+    });
+};
+
+export const validateDataForm = (formData, setFormError) => {
   let errors = {};
   let formOK = true;
 
@@ -54,7 +67,7 @@ const validateDataForm = (formData, setFormError) => {
     formOK = false;
   }
 
-  if (formData.username.trim() === "") {
+  if (formData.username?.trim() === "") {
     errors.username = true;
     formOK = false;
   }

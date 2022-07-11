@@ -3,6 +3,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
@@ -19,4 +20,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
 
-export { auth, firestore, createUserWithEmailAndPassword, updateProfile };
+export {
+  auth,
+  firestore,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+};

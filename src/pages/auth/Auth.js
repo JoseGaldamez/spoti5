@@ -15,7 +15,7 @@ function Auth() {
   const handleForm = () => {
     switch (selectedForm) {
       case "login":
-        return <LoginForm />;
+        return <LoginForm setSelectedForm={setselectedForm} />;
 
       case "register":
         return <RegisterForm setSelectedForm={setselectedForm} />;
