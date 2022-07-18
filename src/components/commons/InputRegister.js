@@ -8,35 +8,16 @@ const InputRegister = ({
   setShowPassword,
   placeholder,
   name,
+  errorText,
 }) => {
-  if (type === "text") {
-    return (
-      <>
-        <Input
-          type={type}
-          name={name}
-          placeholder={placeholder}
-          icon="mail outline"
-          //onChange={}
-          error={formError.email}
-        />
-        {formError.email && (
-          <span className="error-text">
-            Por favor introduce un correo valido
-          </span>
-        )}
-      </>
-    );
-  }
-
-  if (type === "password") {
-    return (
-      <>
-        <Input
-          type={showPassword ? "text" : "password"}
-          name={name}
-          placeholder={placeholder}
-          icon={
+  return (
+    <>
+      <Input
+        type={type === "password" ? (showPassword ? "text" : "password") : type}
+        name={name}
+        placeholder={placeholder}
+        icon={
+          type === "password" ? (
             showPassword ? (
               <Icon
                 name="eye slash outline"
@@ -54,19 +35,18 @@ const InputRegister = ({
                 }}
               />
             )
-          }
-          error={formError.password}
-        />
-        {formError.password && (
-          <span className="error-text">
-            La contraseña debe contener al menos 6 caracteres
-          </span>
-        )}
-      </>
-    );
-  }
-
-  return <>Ingrese un tipo de input</>;
+          ) : type === "email" ? (
+            "mail outline"
+          ) : (
+            "user outline"
+          )
+        }
+        //onChange={}
+        error={formError[name]}
+      />
+      {formError[name] && <span className="error-text">{errorText}</span>}
+    </>
+  );
 };
 
 export default InputRegister;

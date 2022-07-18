@@ -1,10 +1,10 @@
 import { toast } from "react-toastify";
 import {
-  auth,
+  getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
-} from "../../../utils/firebase";
+} from "firebase/auth";
 
 import { validateEmail } from "../../../utils/validations";
 
@@ -15,6 +15,7 @@ export const onSubmitUtils = (
   setSelectedForm
 ) => {
   setFormError({});
+  const auth = getAuth();
 
   if (validateDataForm(formData, setFormError)) {
     setLoading(true);

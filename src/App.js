@@ -1,22 +1,19 @@
-import { auth } from "./utils/firebase";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import "./App.scss";
-import Auth from "./pages/auth/Auth";
+import LoggedNavigation from "./routes/LoggedNavigation";
+import { Auth } from "./pages";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
-  auth.onAuthStateChanged((currentUser) => {
-    if (!currentUser?.emailVerified) {
-      auth.signOut();
-      setUser(currentUser);
-    } else {
-      setUser(currentUser);
-    }
+  const auth = getAuth();
 
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
     setIsLoading(false);
   });
 
@@ -28,9 +25,11 @@ function App() {
     return null;
   }
 
+  if (user === undefined) return null;
+
   return (
     <>
-      {!user ? <Auth /> : <UserLogged logout={logout} />}
+      {!user ? <Auth /> : <LoggedNavigation logout={logout} />}
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -43,23 +42,6 @@ function App() {
         pauseOnHover={false}
       />
     </>
-  );
-}
-
-function UserLogged({ logout }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-        height: "100vh",
-      }}
-    >
-      <h1>Usuario logueado</h1>
-      <button onClick={logout}>Cerrar sesion</button>
-    </div>
   );
 }
 

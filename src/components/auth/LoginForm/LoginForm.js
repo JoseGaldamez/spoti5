@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Form } from "semantic-ui-react";
-import { auth } from "../../../utils/firebase";
 import InputRegister from "../../commons/InputRegister";
 import { validateDataForm } from "../RegisterForm/utilsRegisterForm";
 import "./LoginForm.scss";
 
-function LoginForm({ setSelectedForm }) {
+export function LoginForm({ setSelectedForm }) {
   const [formData, setFormData] = useState(defaultValueForm);
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [userActive, setUserActive] = useState(false);
-  const [user, setUser] = useState(null);
 
   const handlerOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,13 +26,14 @@ function LoginForm({ setSelectedForm }) {
       <Form onSubmit={handlerOnSubmit} onChange={handlerOnChange}>
         <Form.Field>
           <InputRegister
-            type="text"
+            type="email"
             name="email"
             formData={formData}
             showPassword={showPassword}
             setShowPassword={setShowPassword}
             formError={formError}
             placeholder="Correo electrónico"
+            errorText="Por favor introduce un correo valido"
           />
         </Form.Field>
         <Form.Field>
@@ -48,6 +45,7 @@ function LoginForm({ setSelectedForm }) {
             setShowPassword={setShowPassword}
             formError={formError}
             placeholder="Contraseña"
+            errorText="La contraseña debe tener al menos 6 caracteres"
           />
         </Form.Field>
         <Button type="submit">Iniciar Sesión</Button>
@@ -79,5 +77,3 @@ const defaultValueForm = {
   email: "",
   password: "",
 };
-
-export default LoginForm;

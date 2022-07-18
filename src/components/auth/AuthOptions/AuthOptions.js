@@ -3,7 +3,7 @@ import { Button } from "semantic-ui-react";
 
 import "./AuthOptions.scss";
 
-function AuthOptions({ setSelectedForm }) {
+export function AuthOptions({ setSelectedForm }) {
   return (
     <div className="auth-options">
       <h2>Millones de canciones gratis en Spoti5</h2>
@@ -16,5 +16,3 @@ function AuthOptions({ setSelectedForm }) {
     </div>
   );
 }
-
-export default AuthOptions;

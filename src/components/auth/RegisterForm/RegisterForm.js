@@ -6,7 +6,7 @@ import "./RegisterForm.scss";
 import InputRegister from "../../commons/InputRegister";
 import FooterRegister from "../../commons/FooterAuth";
 
-function RegisterForm({ setSelectedForm }) {
+export function RegisterForm({ setSelectedForm }) {
   const [formData, setFormData] = useState(defaultValueForm);
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState({});
@@ -18,6 +18,7 @@ function RegisterForm({ setSelectedForm }) {
 
   const onSubmit = () => {
     onSubmitUtils(formData, setFormError, setLoading, setSelectedForm);
+    console.log(formError);
   };
 
   return (
@@ -26,12 +27,13 @@ function RegisterForm({ setSelectedForm }) {
       <Form onChange={onChange} onSubmit={onSubmit}>
         <Form.Field>
           <InputRegister
-            type="text"
+            type="email"
             formError={formError}
             showPassword={showPassword}
             setShowPassword={setShowPassword}
             placeholder="Correo electrónico"
             name="email"
+            errorText="Por favor introduce un correo valido"
           />
           <InputRegister
             type="password"
@@ -40,6 +42,7 @@ function RegisterForm({ setSelectedForm }) {
             setShowPassword={setShowPassword}
             placeholder="Contraseña"
             name="password"
+            errorText="La contraseña debe tener al menos 6 caracteres"
           />
           <InputRegister
             type="text"
@@ -48,6 +51,7 @@ function RegisterForm({ setSelectedForm }) {
             setShowPassword={setShowPassword}
             placeholder="Nombre de usuario"
             name="username"
+            errorText="El nombre de usuario debe tener entre 3 y 15 caracteres"
           />
           <Button type="submit" loading={loading}>
             Continuar
@@ -64,5 +68,3 @@ const defaultValueForm = {
   password: "",
   username: "",
 };
-
-export default RegisterForm;

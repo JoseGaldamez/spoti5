@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import LoginForm from "../../components/auth/LoginForm";
-import RegisterForm from "../../components/auth/RegisterForm";
-import AuthOptions from "../../components/auth/AuthOptions";
+import { AuthOptions, LoginForm, RegisterForm } from "../../components/auth";
 
 import BackgroundApp from "../../assets/jpg/background-auth.jpg";
 import LogoNameWhite from "../../assets/png/logo-name-white.png";
@@ -9,19 +7,20 @@ import LogoNameWhite from "../../assets/png/logo-name-white.png";
 // Styles
 import "./auth.scss";
 
-function Auth() {
-  const [selectedForm, setselectedForm] = useState(null);
+export function Auth() {
+  const [selectedForm, setSelectedForm] = useState(null);
 
   const handleForm = () => {
     switch (selectedForm) {
-      case "login":
-        return <LoginForm setSelectedForm={setselectedForm} />;
-
+      case null:
+        return <AuthOptions setSelectedForm={setSelectedForm} />;
       case "register":
-        return <RegisterForm setSelectedForm={setselectedForm} />;
+        return <RegisterForm setSelectedForm={setSelectedForm} />;
+      case "login":
+        return <LoginForm setSelectedForm={setSelectedForm} />;
 
       default:
-        return <AuthOptions setSelectedForm={setselectedForm} />;
+        break;
     }
   };
 
@@ -37,5 +36,3 @@ function Auth() {
     </div>
   );
 }
-
-export default Auth;
