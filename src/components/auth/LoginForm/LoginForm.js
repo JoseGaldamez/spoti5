@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+//import { toast } from "react-toastify";
 import { Button, Form } from "semantic-ui-react";
 import InputRegister from "../../commons/InputRegister";
 import { validateDataForm } from "../RegisterForm/utilsRegisterForm";
